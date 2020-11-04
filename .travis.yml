@@ -3,19 +3,19 @@ services:
     - docker
 
 before_install:
-    - docker build -t kono10/docker-react -f Dockerfile.dev .
+  - docker build -t kono10/docker-react -f Dockerfile.dev .
 
 script:
-    - docker run -e CI=true kono10/docker-react npm run test -- --coverage
+  - docker run -e CI=true kono10/docker-react npm run test
 
 deploy:
-    service: elasticbeanstalk
-    region: "us-east-2"
-    app: "docker"
-    env: "Docker-env"
-    bucker_name: "elasticbeanstalk-us-east-2-663582079822"
-    bucket_path: "docker"
-    on:
-        branch: master
-    access_key_id: $AWS_ACCESS_KEY
-    secret_access_key: $AWS_SECRET_KEY
+  provider: elasticbeanstalk
+  region: 'us-east-2'
+  app: 'docker'
+  env: 'docker-env'
+  bucket_name: 'elasticbeanstalk-us-east-2-663582079822'
+  bucket_path: 'docker'
+  on:
+    branch: master
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_KEY
