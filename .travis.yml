@@ -1,17 +1,11 @@
-# need super user permissions to run the build
 sudo: required
-# forces travis to install docker
 services:
     - docker
 
-# series of commands that are executed before the test are run
 before_install:
-# builds the docker image
   - docker build -t kono10/docker-react -f Dockerfile.dev .
 
 script:
-# if this commands fails build will fail
-# override the default start command
   - docker run -e CI=true kono10/docker-react npm run test -- --coverage
 
 deploy:
